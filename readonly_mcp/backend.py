@@ -216,8 +216,14 @@ class Backend:
         if params is not None and (not isinstance(params, dict) or any(not isinstance(v, (str, int, float, bool, type(None))) for v in params.values())):
             raise Rejected("params must contain scalar named bind values")
         started = time.monotonic()
+        streaming = self.dialect in {"mysql", "mariadb", "postgresql"}
+        if streaming and self.dialect == "postgresql" and re.match(r"\s*EXPLAIN\b", sql, re.I):
+            # PostgreSQL 会为 stream_results 发出 DECLARE ... CURSOR FOR <sql>，
+            # 而 DECLARE CURSOR 不接受 EXPLAIN，会报 42601 语法错误。
+            # MySQL/MariaDB 的服务端游标直接执行语句、不使用 DECLARE，故保持不变。
+            streaming = False
         with self.session() as (conn, _):
-            result = conn.execution_options(stream_results=self.dialect in {"mysql", "mariadb", "postgresql"}, max_row_buffer=cap + 1).execute(text(sql), params or {})
+            result = conn.execution_options(stream_results=streaming, max_row_buffer=cap + 1).execute(text(sql), params or {})
             try:
                 columns = list(result.keys())
                 raw_rows = result.fetchmany(cap + 1)
