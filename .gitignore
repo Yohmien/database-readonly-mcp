@@ -1,0 +1,29 @@
+# Local connection settings and recovery copies
+connections.json
+*.last-good.json
+backups/
+.env
+.env.*
+!.env.example
+
+# Runtime state, logs and database exports
+mirror-state.json*
+sql-import-state.json*
+run-logs/
+*.log
+*.sql
+*.db
+*.sqlite
+*.sqlite3
+
+# Local interpreters, caches and third-party clients
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+vendor/
+.idea/
+.vscode/

@@ -1,0 +1,41 @@
+{
+  "connections": [
+    {
+      "name": "mysql-local",
+      "url": "mysql://localhost:3306",
+      "username_env": "MYSQL_USER",
+      "password_env": "MYSQL_PASS",
+      "aliases": ["database_readonly"],
+      "max_rows": 1000,
+      "timeout_seconds": 15
+    },
+    {
+      "name": "postgres-readonly",
+      "url": "postgresql://db.example:5432/warehouse",
+      "username_env": "PG_READONLY_USER",
+      "password_env": "PG_READONLY_PASSWORD"
+    },
+    {
+      "name": "sqlserver-readonly",
+      "url": "mssql://db.example:1433/warehouse?driver=ODBC+Driver+18+for+SQL+Server&TrustServerCertificate=no",
+      "username_env": "MSSQL_READONLY_USER",
+      "password_env": "MSSQL_READONLY_PASSWORD"
+    },
+    {
+      "name": "oracle-readonly",
+      "url": "oracle://db.example:1521/?service_name=WAREHOUSE",
+      "username_env": "ORACLE_READONLY_USER",
+      "password_env": "ORACLE_READONLY_PASSWORD"
+    },
+    {
+      "name": "mariadb-readonly",
+      "url": "mariadb://db.example:3306/warehouse",
+      "username_env": "MARIA_READONLY_USER",
+      "password_env": "MARIA_READONLY_PASSWORD"
+    },
+    {
+      "name": "sqlite-readonly",
+      "url": "sqlite:///C:/data/warehouse.db"
+    }
+  ]
+}
