@@ -95,7 +95,7 @@ class Backend:
                 (pg_has_role(current_user,c.relowner,'USAGE') OR
                  has_table_privilege(c.oid,'INSERT,UPDATE,DELETE,TRUNCATE,TRIGGER') OR
                  has_any_column_privilege(c.oid,'INSERT,UPDATE'))) OR EXISTS (
-                SELECT 1 FROM pg_namespace WHERE nspname NOT LIKE 'pg_%'
+                SELECT 1 FROM pg_namespace WHERE nspname NOT LIKE 'pg_%%'
                 AND (has_schema_privilege(oid,'CREATE') OR pg_has_role(current_user,nspowner,'USAGE')))
                 OR has_database_privilege(current_database(),'CREATE')
                 OR EXISTS (SELECT 1 FROM pg_database WHERE datname=current_database()
